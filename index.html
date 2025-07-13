@@ -1,12 +1,39 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy 20th Hani</title>
-    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(to bottom, #87CEEB, #E0F7FA);
+            min-height: 100vh;
+            overflow: hidden;
+        }
+        .sunflower {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            position: absolute;
+        }
+        .sunflower:hover {
+            transform: scale(1.1);
+        }
+        .message {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+        .message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+    </style>
 </head>
 <body class="flex flex-col items-center justify-center p-4">
     <div id="garden" class="relative w-full h-[80vh]">
@@ -14,7 +41,7 @@
     
     <div id="message" class="message text-center mt-4 p-6 rounded-xl bg-white bg-opacity-80 shadow-lg">
         <h1 class="text-4xl font-bold text-pink-600 mb-2">Happy 20th Monthsary, Hani!</h1>
-        <p class="text-xl text-pink-500">Sunflower para nmo hani ❤️</p>
+        <p class="text-xl text-pink-500">A garden of love, blooming just for you ❤️</p>
     </div>
 
     <script>
@@ -23,7 +50,6 @@
             const message = document.getElementById('message');
             let flowerCount = 0;
             const maxFlowers = 20;
-            
             
             createSunflower(window.innerWidth / 2 - 40, window.innerHeight / 2 - 100);
             
@@ -62,14 +88,12 @@
                 garden.appendChild(sunflower);
                 flowerCount++;
                 
-               
                 sunflower.addEventListener('click', function(e) {
                     e.stopPropagation();
                     const randomX = Math.random() * (window.innerWidth - 100);
                     const randomY = Math.random() * (window.innerHeight - 200);
                     createSunflower(randomX, randomY);
                 });
-                
                 
                 sunflower.addEventListener('touchstart', function(e) {
                     e.preventDefault();
@@ -82,7 +106,6 @@
             
             function showMessage() {
                 message.classList.add('show');
-                
                 
                 for (let i = 0; i < 30; i++) {
                     createHeart();
@@ -107,7 +130,6 @@
                     sway ${duration / 2}s ease-in-out infinite alternate
                 `;
                 
-                
                 const style = document.createElement('style');
                 style.innerHTML = `
                     @keyframes fall {
@@ -120,13 +142,12 @@
                 `;
                 document.head.appendChild(style);
                 
-                
                 setTimeout(() => {
                     heart.remove();
                     style.remove();
                 }, duration * 1000);
             }
         });
-    </>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'95e6b1e4d2e30a7c',t:'MTc1MjM4Nzg0MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'95e6c4dbd5e29d1f',t:'MTc1MjM4ODYxOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
