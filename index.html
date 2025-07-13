@@ -1,153 +1,252 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy 20th Hani</title>
+    <title>Swiping Cards</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body {
-            background: linear-gradient(to bottom, #87CEEB, #E0F7FA);
-            min-height: 100vh;
-            overflow: hidden;
+        .card {
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
         }
-        .sunflower {
-            cursor: pointer;
-            transition: transform 0.3s ease;
-            position: absolute;
+        .card.swiping {
+            transition: none;
         }
-        .sunflower:hover {
-            transform: scale(1.1);
-        }
-        .message {
+        .card.swipe-left {
+            transform: translateX(-100%) rotate(-30deg);
             opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 1s ease, transform 1s ease;
         }
-        .message.show {
-            opacity: 1;
-            transform: translateY(0);
+        .card.swipe-right {
+            transform: translateX(100%) rotate(30deg);
+            opacity: 0;
         }
-        @keyframes float {
-            0% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-10px) rotate(5deg); }
-            100% { transform: translateY(0) rotate(0deg); }
+        .card.swipe-up {
+            transform: translateY(-100%) rotate(10deg);
+            opacity: 0;
         }
     </style>
 </head>
-<body class="flex flex-col items-center justify-center p-4">
-    <div id="garden" class="relative w-full h-[80vh]">
-    </div>
-    
-    <div id="message" class="message text-center mt-4 p-6 rounded-xl bg-white bg-opacity-80 shadow-lg">
-        <h1 class="text-4xl font-bold text-pink-600 mb-2">Happy 20th Monthsary, Hani!</h1>
-        <p class="text-xl text-pink-500">A garden of love, blooming just for you ❤️</p>
+<body class="bg-gradient-to-br from-rose-400 via-pink-300 to-red-300 min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-md mx-auto">
+        <!-- Card Stack Container -->
+        <div class="relative h-96 mb-8">
+            <div id="cardStack" class="relative w-full h-full">
+                <!-- Card 1 -->
+                <div class="card absolute inset-0 bg-white rounded-2xl shadow-2xl cursor-grab active:cursor-grabbing overflow-hidden" style="z-index: 4;">
+                    <img src="IMG_20240312_164940.jpg" alt="Our first memory" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Our First Memory</h3>
+                        <p class="text-gray-600">The day we started this beautiful journey together 💕</p>
+                    </div>
+                </div>
+                
+                <!-- Card 2 -->
+                <div class="card absolute inset-0 bg-white rounded-2xl shadow-2xl cursor-grab active:cursor-grabbing overflow-hidden" style="z-index: 3; transform: scale(0.95) translateY(10px);">
+                    <img src="IMG_20241211_132402.jpg" alt="Our second memory" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Our Second Memory</h3>
+                        <p class="text-gray-600">Every moment with you feels like paradise 🌊</p>
+                    </div>
+                </div>
+                
+                <!-- Card 3 -->
+                <div class="card absolute inset-0 bg-white rounded-2xl shadow-2xl cursor-grab active:cursor-grabbing overflow-hidden" style="z-index: 2; transform: scale(0.9) translateY(20px);">
+                    <img src="IMG_20240312_165150.jpg" alt="Our third memory" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Our Third Memory</h3>
+                        <p class="text-gray-600">Adventures are better when shared with you 🏙️</p>
+                    </div>
+                </div>
+                
+                <!-- Card 4 -->
+                <div class="card absolute inset-0 bg-white rounded-2xl shadow-2xl cursor-grab active:cursor-grabbing overflow-hidden" style="z-index: 1; transform: scale(0.9) translateY(20px);">
+                    <img src="IMG_20240523_124357.jpg" alt="Romantic sunset" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Our Fourth Memory</h3>
+                        <p class="text-gray-600">Every sunset reminds me of you ❤️</p>
+                    </div>
+                </div>
+                
+                <!-- Card 5 -->
+                <div class="card absolute inset-0 bg-white rounded-2xl shadow-2xl cursor-grab active:cursor-grabbing overflow-hidden" style="z-index: 0; transform: scale(0.85) translateY(30px);">
+                    <img src="IMG_20241005_164046.jpg" alt="Beautiful flowers" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Our Fifth Memory</h3>
+                        <p class="text-gray-600">Like flowers, our love keeps blooming 🌸</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        
+        <!-- Instructions -->
+        <div class="text-center text-white/90 text-sm">
+            <p>Swipe through our beautiful memories together 💕</p>
+        </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const garden = document.getElementById('garden');
-            const message = document.getElementById('message');
-            let flowerCount = 0;
-            const maxFlowers = 20;
-            
-            createSunflower(window.innerWidth / 2 - 40, window.innerHeight / 2 - 100);
-            
-            function createSunflower(x, y) {
-                if (flowerCount >= maxFlowers) {
-                    showMessage();
-                    return;
-                }
+        class SwipeCards {
+            constructor() {
+                this.cardStack = document.getElementById('cardStack');
+                this.cards = Array.from(this.cardStack.querySelectorAll('.card'));
+                this.currentCardIndex = 0;
+                this.isDragging = false;
+                this.startX = 0;
+                this.startY = 0;
+                this.currentX = 0;
+                this.currentY = 0;
                 
-                const sunflower = document.createElement('div');
-                sunflower.className = 'sunflower';
-                sunflower.style.left = `${x}px`;
-                sunflower.style.top = `${y}px`;
-                sunflower.style.animation = `float ${3 + Math.random() * 2}s infinite ease-in-out`;
-                
-                sunflower.innerHTML = `
-                    <svg width="80" height="120" viewBox="0 0 80 120" xmlns="http://www.w3.org/2000/svg">
-                        <!-- Stem -->
-                        <path d="M40 50 L40 120" stroke="#2E8B57" stroke-width="4" />
-                        <!-- Leaf -->
-                        <path d="M40 80 Q60 70 50 90" fill="#2E8B57" />
-                        <!-- Flower center -->
-                        <circle cx="40" cy="40" r="12" fill="#654321" />
-                        <!-- Petals -->
-                        <path d="M40 10 Q50 25 40 40 Q30 25 40 10" fill="#FFD700" />
-                        <path d="M10 40 Q25 30 40 40 Q25 50 10 40" fill="#FFD700" />
-                        <path d="M40 70 Q50 55 40 40 Q30 55 40 70" fill="#FFD700" />
-                        <path d="M70 40 Q55 30 40 40 Q55 50 70 40" fill="#FFD700" />
-                        <path d="M20 20 Q30 20 40 40 Q30 30 20 20" fill="#FFD700" />
-                        <path d="M60 20 Q50 20 40 40 Q50 30 60 20" fill="#FFD700" />
-                        <path d="M20 60 Q30 50 40 40 Q30 60 20 60" fill="#FFD700" />
-                        <path d="M60 60 Q50 50 40 40 Q50 60 60 60" fill="#FFD700" />
-                    </svg>
-                `;
-                
-                garden.appendChild(sunflower);
-                flowerCount++;
-                
-                sunflower.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    const randomX = Math.random() * (window.innerWidth - 100);
-                    const randomY = Math.random() * (window.innerHeight - 200);
-                    createSunflower(randomX, randomY);
-                });
-                
-                sunflower.addEventListener('touchstart', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    const randomX = Math.random() * (window.innerWidth - 100);
-                    const randomY = Math.random() * (window.innerHeight - 200);
-                    createSunflower(randomX, randomY);
-                });
+                this.init();
             }
             
-            function showMessage() {
-                message.classList.add('show');
-                
-                for (let i = 0; i < 30; i++) {
-                    createHeart();
-                }
+            init() {
+                this.setupEventListeners();
+                this.updateCardStack();
             }
             
-            function createHeart() {
-                const heart = document.createElement('div');
-                heart.innerHTML = '❤️';
-                heart.style.position = 'absolute';
-                heart.style.fontSize = `${Math.random() * 20 + 10}px`;
-                heart.style.left = `${Math.random() * window.innerWidth}px`;
-                heart.style.top = '-20px';
-                heart.style.opacity = Math.random() * 0.5 + 0.5;
-                heart.style.zIndex = '1000';
+            setupEventListeners() {
+                // Touch events
+                this.cardStack.addEventListener('touchstart', this.handleStart.bind(this), { passive: false });
+                this.cardStack.addEventListener('touchmove', this.handleMove.bind(this), { passive: false });
+                this.cardStack.addEventListener('touchend', this.handleEnd.bind(this));
                 
-                document.body.appendChild(heart);
+                // Mouse events
+                this.cardStack.addEventListener('mousedown', this.handleStart.bind(this));
+                this.cardStack.addEventListener('mousemove', this.handleMove.bind(this));
+                this.cardStack.addEventListener('mouseup', this.handleEnd.bind(this));
+                this.cardStack.addEventListener('mouseleave', this.handleEnd.bind(this));
                 
-                const duration = Math.random() * 3 + 2;
-                heart.style.animation = `
-                    fall ${duration}s linear forwards,
-                    sway ${duration / 2}s ease-in-out infinite alternate
-                `;
+
+            }
+            
+            handleStart(e) {
+                if (this.currentCardIndex >= this.cards.length) return;
                 
-                const style = document.createElement('style');
-                style.innerHTML = `
-                    @keyframes fall {
-                        to { transform: translateY(${window.innerHeight}px); opacity: 0; }
-                    }
-                    @keyframes sway {
-                        from { transform: translateX(-20px); }
-                        to { transform: translateX(20px); }
-                    }
-                `;
-                document.head.appendChild(style);
+                this.isDragging = true;
+                const touch = e.touches ? e.touches[0] : e;
+                this.startX = touch.clientX;
+                this.startY = touch.clientY;
+                
+                const currentCard = this.cards[this.currentCardIndex];
+                currentCard.classList.add('swiping');
+                
+                e.preventDefault();
+            }
+            
+            handleMove(e) {
+                if (!this.isDragging || this.currentCardIndex >= this.cards.length) return;
+                
+                const touch = e.touches ? e.touches[0] : e;
+                this.currentX = touch.clientX - this.startX;
+                this.currentY = touch.clientY - this.startY;
+                
+                const currentCard = this.cards[this.currentCardIndex];
+                const rotation = this.currentX * 0.1;
+                
+                currentCard.style.transform = `translate(${this.currentX}px, ${this.currentY}px) rotate(${rotation}deg)`;
+                currentCard.style.opacity = 1 - Math.abs(this.currentX) / 300;
+                
+                e.preventDefault();
+            }
+            
+            handleEnd(e) {
+                if (!this.isDragging || this.currentCardIndex >= this.cards.length) return;
+                
+                this.isDragging = false;
+                const currentCard = this.cards[this.currentCardIndex];
+                currentCard.classList.remove('swiping');
+                
+                const threshold = 100;
+                const absX = Math.abs(this.currentX);
+                const absY = Math.abs(this.currentY);
+                
+                if (absX > threshold && absX > absY) {
+                    // Horizontal swipe
+                    this.swipeCard(this.currentX > 0 ? 'right' : 'left');
+                } else if (this.currentY < -threshold && absY > absX) {
+                    // Upward swipe
+                    this.swipeCard('up');
+                } else {
+                    // Return to center
+                    currentCard.style.transform = '';
+                    currentCard.style.opacity = '';
+                }
+                
+                this.currentX = 0;
+                this.currentY = 0;
+            }
+            
+            swipeCard(direction) {
+                if (this.currentCardIndex >= this.cards.length) return;
+                
+                const currentCard = this.cards[this.currentCardIndex];
+                currentCard.classList.add(`swipe-${direction}`);
                 
                 setTimeout(() => {
-                    heart.remove();
-                    style.remove();
-                }, duration * 1000);
+                    currentCard.style.display = 'none';
+                    this.currentCardIndex++;
+                    this.updateCardStack();
+                    
+                    if (this.currentCardIndex >= this.cards.length) {
+                        this.showEndMessage();
+                    }
+                }, 300);
             }
+            
+            updateCardStack() {
+                this.cards.forEach((card, index) => {
+                    if (index < this.currentCardIndex) return;
+                    
+                    const offset = index - this.currentCardIndex;
+                    const scale = 1 - (offset * 0.05);
+                    const translateY = offset * 10;
+                    const zIndex = this.cards.length - offset;
+                    
+                    card.style.transform = `scale(${scale}) translateY(${translateY}px)`;
+                    card.style.zIndex = zIndex;
+                    card.style.display = 'block';
+                    card.classList.remove('swipe-left', 'swipe-right', 'swipe-up');
+                });
+            }
+            
+            showEndMessage() {
+                setTimeout(() => {
+                    this.cardStack.innerHTML = `
+                        <div class="absolute inset-0 bg-gradient-to-br from-pink-100 to-rose-100 rounded-2xl shadow-2xl flex flex-col items-center justify-center p-6">
+                            <div class="text-center mb-6">
+                                <div class="text-6xl mb-4">💕</div>
+                                <h3 class="text-3xl font-bold text-rose-600 mb-4">Happy 20th Monthsary Hani!</h3>
+                                <div class="bg-white rounded-lg p-6 shadow-lg max-w-sm">
+                                    <p class="text-gray-700 leading-relaxed text-sm">
+                                        My dearest Hani,<br><br>
+                                        
+                                        Twenty months ago, you walked into my life and changed everything. Every day with you has been a beautiful adventure filled with laughter, love, and countless precious memories.<br><br>
+                                        
+                                        Thank you for being my partner, my best friend, and my greatest love. Here's to many more months and years of creating beautiful memories together.<br><br>
+                                        
+                                        I love you more than words can express.<br><br>
+                                        
+                                        Forever yours ❤️
+                                    </p>
+                                </div>
+                                <button onclick="location.reload()" class="mt-6 bg-rose-500 hover:bg-rose-600 text-white px-6 py-2 rounded-full transition-colors">
+                                    View Again
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                }, 500);
+            }
+        }
+        
+        // Initialize the swipe cards when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new SwipeCards();
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'95e6c4dbd5e29d1f',t:'MTc1MjM4ODYxOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'95e9ffc786b29d1f',t:'MTc1MjQyMjQ4OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
