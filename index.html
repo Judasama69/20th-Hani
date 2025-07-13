@@ -1,0 +1,132 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sunflower Anniversary</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex flex-col items-center justify-center p-4">
+    <div id="garden" class="relative w-full h-[80vh]">
+    </div>
+    
+    <div id="message" class="message text-center mt-4 p-6 rounded-xl bg-white bg-opacity-80 shadow-lg">
+        <h1 class="text-4xl font-bold text-pink-600 mb-2">Happy 20th Monthsary, Hani!</h1>
+        <p class="text-xl text-pink-500">A garden of love, blooming just for you ❤️</p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const garden = document.getElementById('garden');
+            const message = document.getElementById('message');
+            let flowerCount = 0;
+            const maxFlowers = 20;
+            
+            
+            createSunflower(window.innerWidth / 2 - 40, window.innerHeight / 2 - 100);
+            
+            function createSunflower(x, y) {
+                if (flowerCount >= maxFlowers) {
+                    showMessage();
+                    return;
+                }
+                
+                const sunflower = document.createElement('div');
+                sunflower.className = 'sunflower';
+                sunflower.style.left = `${x}px`;
+                sunflower.style.top = `${y}px`;
+                sunflower.style.animation = `float ${3 + Math.random() * 2}s infinite ease-in-out`;
+                
+                sunflower.innerHTML = `
+                    <svg width="80" height="120" viewBox="0 0 80 120" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Stem -->
+                        <path d="M40 50 L40 120" stroke="#2E8B57" stroke-width="4" />
+                        <!-- Leaf -->
+                        <path d="M40 80 Q60 70 50 90" fill="#2E8B57" />
+                        <!-- Flower center -->
+                        <circle cx="40" cy="40" r="12" fill="#654321" />
+                        <!-- Petals -->
+                        <path d="M40 10 Q50 25 40 40 Q30 25 40 10" fill="#FFD700" />
+                        <path d="M10 40 Q25 30 40 40 Q25 50 10 40" fill="#FFD700" />
+                        <path d="M40 70 Q50 55 40 40 Q30 55 40 70" fill="#FFD700" />
+                        <path d="M70 40 Q55 30 40 40 Q55 50 70 40" fill="#FFD700" />
+                        <path d="M20 20 Q30 20 40 40 Q30 30 20 20" fill="#FFD700" />
+                        <path d="M60 20 Q50 20 40 40 Q50 30 60 20" fill="#FFD700" />
+                        <path d="M20 60 Q30 50 40 40 Q30 60 20 60" fill="#FFD700" />
+                        <path d="M60 60 Q50 50 40 40 Q50 60 60 60" fill="#FFD700" />
+                    </svg>
+                `;
+                
+                garden.appendChild(sunflower);
+                flowerCount++;
+                
+               
+                sunflower.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const randomX = Math.random() * (window.innerWidth - 100);
+                    const randomY = Math.random() * (window.innerHeight - 200);
+                    createSunflower(randomX, randomY);
+                });
+                
+                
+                sunflower.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const randomX = Math.random() * (window.innerWidth - 100);
+                    const randomY = Math.random() * (window.innerHeight - 200);
+                    createSunflower(randomX, randomY);
+                });
+            }
+            
+            function showMessage() {
+                message.classList.add('show');
+                
+                
+                for (let i = 0; i < 30; i++) {
+                    createHeart();
+                }
+            }
+            
+            function createHeart() {
+                const heart = document.createElement('div');
+                heart.innerHTML = '❤️';
+                heart.style.position = 'absolute';
+                heart.style.fontSize = `${Math.random() * 20 + 10}px`;
+                heart.style.left = `${Math.random() * window.innerWidth}px`;
+                heart.style.top = '-20px';
+                heart.style.opacity = Math.random() * 0.5 + 0.5;
+                heart.style.zIndex = '1000';
+                
+                document.body.appendChild(heart);
+                
+                const duration = Math.random() * 3 + 2;
+                heart.style.animation = `
+                    fall ${duration}s linear forwards,
+                    sway ${duration / 2}s ease-in-out infinite alternate
+                `;
+                
+                
+                const style = document.createElement('style');
+                style.innerHTML = `
+                    @keyframes fall {
+                        to { transform: translateY(${window.innerHeight}px); opacity: 0; }
+                    }
+                    @keyframes sway {
+                        from { transform: translateX(-20px); }
+                        to { transform: translateX(20px); }
+                    }
+                `;
+                document.head.appendChild(style);
+                
+                
+                setTimeout(() => {
+                    heart.remove();
+                    style.remove();
+                }, duration * 1000);
+            }
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'95e6b1e4d2e30a7c',t:'MTc1MjM4Nzg0MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
