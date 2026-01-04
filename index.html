@@ -38,7 +38,6 @@
                     </div>
                 </div>
 
-                <!-- Card 1 -->
                 <div class="card absolute inset-0 bg-white rounded-2xl shadow-2xl cursor-grab active:cursor-grabbing overflow-hidden" style="z-index: 4;">
                     <img src="/assets/IMG_20240312_164940.jpg" alt="Our first memory" class="w-full h-48 object-cover">
                     <div class="p-6">
@@ -47,7 +46,6 @@
                     </div>
                 </div>
                 
-                <!-- Card 2 -->
                 <div class="card absolute inset-0 bg-white rounded-2xl shadow-2xl cursor-grab active:cursor-grabbing overflow-hidden" style="z-index: 3; transform: scale(0.95) translateY(10px);">
                     <img src="/assets/IMG_20241211_132402.jpg" alt="Our second memory" class="w-full h-48 object-cover">
                     <div class="p-6">
@@ -56,7 +54,6 @@
                     </div>
                 </div>
                 
-                <!-- Card 3 -->
                 <div class="card absolute inset-0 bg-white rounded-2xl shadow-2xl cursor-grab active:cursor-grabbing overflow-hidden" style="z-index: 2; transform: scale(0.9) translateY(20px);">
                     <img src="/assets/IMG_20240527_121536.jpg" alt="Our third memory" class="w-full h-48 object-cover">
                     <div class="p-6">
@@ -65,7 +62,6 @@
                     </div>
                 </div>
                 
-                <!-- Card 4 -->
                 <div class="card absolute inset-0 bg-white rounded-2xl shadow-2xl cursor-grab active:cursor-grabbing overflow-hidden" style="z-index: 1; transform: scale(0.9) translateY(20px);">
                     <img src="/assets/IMG_20240601_104229.jpg" alt="Our Fourth Memory" class="w-full h-48 object-cover">
                     <div class="p-6">
@@ -74,7 +70,6 @@
                     </div>
                 </div>
                 
-                <!-- Card 5 -->
                 <div class="card absolute inset-0 bg-white rounded-2xl shadow-2xl cursor-grab active:cursor-grabbing overflow-hidden" style="z-index: 0; transform: scale(0.85) translateY(30px);">
                     <img src="/assets/IMG_20241005_164046.jpg" alt="Our Fifth Memory" class="w-full h-48 object-cover">
                     <div class="p-6">
@@ -109,12 +104,10 @@
             }
             
             setupEventListeners() {
-                // Touch events
                 this.cardStack.addEventListener('touchstart', this.handleStart.bind(this), { passive: false });
                 this.cardStack.addEventListener('touchmove', this.handleMove.bind(this), { passive: false });
                 this.cardStack.addEventListener('touchend', this.handleEnd.bind(this));
                 
-                // Mouse events
                 this.cardStack.addEventListener('mousedown', this.handleStart.bind(this));
                 this.cardStack.addEventListener('mousemove', this.handleMove.bind(this));
                 this.cardStack.addEventListener('mouseup', this.handleEnd.bind(this));
